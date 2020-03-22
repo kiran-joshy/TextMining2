@@ -1,1 +1,1 @@
-"#TextMining2" 
+"#TextMining2 SMA" 
