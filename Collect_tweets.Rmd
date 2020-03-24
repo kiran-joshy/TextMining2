@@ -1,0 +1,91 @@
+
+
+##  Getting started with R and R studio (Installation)
+- First,we need to download R to our local computer from https://cran.r-project.org/ CRAN (Comprehensive R Archive Network). Download the package that applies to your computer and follow the prompts to install.
+
+- Next we need to download and installR studio from https://www.rstudio.com/products/rstudio/download/. Select the free R studio Desktop open source lince and choose the package that applies to your computer.
+
+
+##  Getting Twitter API keys
+In order to access Twitter Search or Streaming API, we need to get four pieces of information from Twitter: API key, API secret, Access token and Access token secret.  You can obtain this information by following the steps below:
+
+-	Create a Twitter account if you do not already have one.
+- Go to https://apps.twitter.com/ and log in with your Twitter credentials.
+- Click "Create New App" ( Note: If do you do not already have an existing app since July 2018, you will be asked to apply. Simply click the apply button.)
+-	Fill out the form, agree to the terms, and click "Create your Twitter application"
+-	In the next page, click on "API keys" tab, and copy your "API key" and "API secret".
+-	Scroll down and click "Create my access token", and copy your "Access token" and "Access token secret"
+
+## 1. Extracting tweets with specific hashtags or keywords
+
+Once you have obtained the four authentication keys from Twitter, you can begin to search for specific keywords or hashtags of interest. In the code snippet below, we have extracted 200 tweets with the keyword "upwork". These parameters can be adjusted as necessary.
+
+{r, eval=FALSE}
+# install relevant packages
+install.packages("knitr",repos = "http://cran.us.r-project.org")
+install.packages("twitteR")
+install.packages("ROAuth")
+library(twitteR)
+library(ROAuth)
+
+# authenticate with Twitter
+
+consumerKey<-	"n8QMJkP824hHLYioXmKjomnzo"
+consumerSecret<-"9O1iEqVMKRLbgmuhyiurF0tvBEZyjiXbal2CvWSnP9JPG8GF9N"
+
+accessToken<-"1234484240798146560-PsbhlCAdhbBIxkU0JSrUmjXfPdPLdM"
+accessSecret<-"ZtniwBsdYVexowqNR9kepDhbdaUC6S4NizU3hAtYW04kr"
+
+setup_twitter_oauth (consumerKey, consumerSecret, accessToken, accessSecret)  # authenticate
+
+# search for tweets by keyword
+
+tweets<-searchTwitter("2020election", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL,
+                                resultType=NULL, retryOnRateLimit=120)
+tweets1<-searchTwitter("democraticdebate", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL,
+                                resultType=NULL, retryOnRateLimit=120)
+
+tweets2<-searchTwitter("BernieSanders", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL,
+                                resultType=NULL, retryOnRateLimit=120)
+tweets3<-searchTwitter("BidenloosesToTrump", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL,
+                                resultType=NULL, retryOnRateLimit=120)
+tweets4<-searchTwitter("BernieSanders2020", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+tweets5<-searchTwitter("warroom2020", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+tweets6<-searchTwitter("DonaldTrump", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+tweets7<-searchTwitter("democraticprimaries", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+tweets8<-searchTwitter("demcast", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+tweets9<-searchTwitter("Biden", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+tweets10<-searchTwitter("USPolitics", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+
+
+# put tweets in a data frame
+tweets<-twListToDF(tweets)
+tweets1<-twListToDF(tweets1)
+tweets2<-twListToDF(tweets2)
+tweets3<-twListToDF(tweets3)
+tweets4<-twListToDF(tweets4)
+tweets5<-twListToDF(tweets5)
+tweets6<-twListToDF(tweets6)
+tweets7<-twListToDF(tweets7)
+tweets8<-twListToDF(tweets8)
+tweets9<-twListToDF(tweets9)
+tweets10<-twListToDF(tweets10)
+
+
+# write out to a CSV file
+write.csv(tweets, file="file.csv")
+write.csv(tweets1, file="file1.csv")
+write.csv(tweets2, file="file2.csv")
+write.csv(tweets3, file="file3.csv")
+write.csv(tweets4, file="file4.csv")
+write.csv(tweets5, file="file5.csv")
+write.csv(tweets6, file="file6.csv")
+write.csv(tweets7, file="file7.csv")
+write.csv(tweets8, file="file8.csv")
+write.csv(tweets9, file="file9.csv")
+write.csv(tweets10, file="file10.csv")
+
+
+
+
+
