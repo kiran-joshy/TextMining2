@@ -38,11 +38,12 @@ clean_up_tweets <- function(tweets) {
   # get rid of problem characters
   tweets <- sapply(tweets,function(row) iconv(row, "latin1", "ASCII", sub=""))
   
+  # remove rt
+  tweets <- gsub("rt", "", tweets)
+  
   # remove punctuation, digits, special characters etc
   tweets = gsub("&amp", "", tweets)
   
-  # remove rt
-  tweets <- gsub("rt", "", tweets)
   tweets = gsub("(RT|via)((?:\\b\\W*@\\w+)+)", "", tweets)
   tweets = gsub("@\\w+", "", tweets)
   tweets = gsub("[[:punct:]]", "", tweets)
