@@ -40,15 +40,13 @@ setup_twitter_oauth (consumerKey, consumerSecret, accessToken, accessSecret)  # 
 
 # search for tweets by keyword
 
-tweets<-searchTwitter("USPolitics",n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL,resultType=NULL, retryOnRateLimit=120)
-tweets1<-searchTwitter("trump+election", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL,resultType=NULL, retryOnRateLimit=120)
-tweets2<-searchTwitter("BernieSanders+election", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
-tweets3<-searchTwitter("JoeBiden+election", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+tweets1<-searchTwitter("BernieSanders + election2020", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL,resultType=NULL, retryOnRateLimit=120)
+tweets2<-searchTwitter("BernieSanders+ Covid19", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
+tweets3<-searchTwitter("BernieSanders+ President", n=200, lang=NULL, since=NULL, until=NULL, locale=NULL, geocode=NULL, sinceID=NULL, maxID=NULL, resultType=NULL, retryOnRateLimit=120)
 
 
 
 # put tweets in a data frame
-tweets<-twListToDF(tweets)
 tweets1<-twListToDF(tweets1)
 tweets2<-twListToDF(tweets2)
 tweets3<-twListToDF(tweets3)
@@ -56,13 +54,21 @@ tweets3<-twListToDF(tweets3)
 
 
 # write out to a CSV file
-write.csv(tweets, file="USPolitics.csv")
-write.csv(tweets1, file="trump+election.csv")
-write.csv(tweets2, file="BernieSanders+election.csv")
-write.csv(tweets3, file="JoeBiden+election.csv")
+write.csv(tweets1, file="BernieSanders+election2020.csv")
+write.csv(tweets2, file="BernieSanders+Covid19.csv")
+write.csv(tweets3, file="BernieSanders+President.csv")
 
-
-
+'''
+9 files
+1.trump- 1.election2020
+        2.Covid19
+         3.USPolitics
+2.Joe- 1.election2020
+         2.Covid19
+         3.USPolitics
+3.Bernie-1.election2020
+         2.Covid19
+         3.USPolitics
 
 
 
