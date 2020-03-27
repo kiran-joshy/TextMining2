@@ -11,6 +11,7 @@ library(textstem)
 library(plotly)
 library(syuzhet)
 library(scales)
+library(wordcloud)
 
 # authenticate with Twitter
 consumerKey<-	"n8QMJkP824hHLYioXmKjomnzo"
@@ -106,7 +107,20 @@ bernie_election$text <- clean_up_tweets(bernie_election$text)
 biden_election <- subset(biden_election, select = cols)
 biden_election$text <- clean_up_tweets(biden_election$text)
 
+#Generate word cloud
+generate_wordcloud <- function(tweets){
+  #convert df to text corpus for wordcloud generation
+  tweet_corpus =Corpus(VectorSource(tweets))
+  inspect(tweet_corpus[1])
+  
+  # remove punctuation and number
+  tweet_clean <- tm_map(tweet_corpus, removePunctuation)
+  tweet_clean <- tm_map(tweet_clean, removeNumbers)
+  wordcloud(tweet_clean, random.order=0.5,max.words=200, col=rainbow(50),min.freq = 5,  scale=c(2.0,0.3))
+}
 
+#visualize the word cloud
+generate_wordcloud(trump_election$text)
 
 #get only tweets for Emotion detection 
 tweets_only_trump = trump_election$text
@@ -220,5 +234,3 @@ Viz1 <- ggplot(scores_twitter, aes(x=Sentiment, fill=Sentiment))+ geom_bar(aes(y
   scale_y_continuous(labels = percent)+labs(y="Score")+
   theme(text =element_text(size=15))+theme(axis.text = element_text(size=15))+ theme(legend.position="none")+ coord_cartesian(ylim=c(0,0.6)) + scale_fill_manual(values=c("firebrick1", "grey50", "limeGREEN"))
 Viz1
-
-
