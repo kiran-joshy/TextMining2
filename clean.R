@@ -88,7 +88,7 @@ clean_up_tweets <- function(tweets) {
                     stringsAsFactors = FALSE))
 }
 
-tweets_to_trump$text <- clean_up_tweets(tweets_to_trump$text)
+#tweets_to_trump$text <- clean_up_tweets(tweets_to_trump$text)
 
 #read csv data from file 
 trump_election <- read.csv(file = './trump+election2020.csv')
@@ -121,6 +121,8 @@ generate_wordcloud <- function(tweets){
 
 #visualize the word cloud
 generate_wordcloud(trump_election$text)
+generate_wordcloud(biden_election$text)
+generate_wordcloud(bernie_election$text)
 
 #get only tweets for Emotion detection 
 tweets_only_trump = trump_election$text
@@ -157,7 +159,7 @@ fig3 <- plot_ly(biden_emotions, x=~emotion, y=~percent, type="bar", color=~emoti
   layout(xaxis=list(title="Biden"),  yaxis = list(title = "Emotion count"),
          showlegend=FALSE,title="Distribution of emotion categories") %>%
   layout(yaxis = list(ticksuffix = "%"))
-
+install.packages("subplot")
 subplot(fig1,fig2,fig3)
 
 #Detecting Sentiment Polarity
@@ -188,7 +190,6 @@ score.sentiment <- function(sentences, pos.words, neg.words, .progress='none')
                     #convert to lower
                     sentence <- tolower(sentence)
                     
-                    
                     # split sentence into words with str_split (stringr package)
                     word.list <- str_split(sentence, "\\s+")
                     words <- unlist(word.list)
@@ -210,8 +211,8 @@ score.sentiment <- function(sentences, pos.words, neg.words, .progress='none')
   scores.df <- data.frame(text=sentences, score=scores)
   return(scores.df)
 }
-#sentiment score
-scores_twitter <- score.sentiment(tweets_only_bernie, pos.txt, neg.txt, .progress='text')
+#sentiment score - replace with Trump and Bernie
+scores_twitter <- score.sentiment(tweets_only_biden$text, pos.txt, neg.txt, .progress='text')
 
 
 View(scores_twitter)
