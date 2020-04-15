@@ -1,0 +1,84 @@
+library(twitteR)
+library(ROAuth)
+library(retweet)
+
+# authenticate with Twitter
+
+consumerKey<-	"n8QMJkP824hHLYioXmKjomnzo"
+consumerSecret<-"9O1iEqVMKRLbgmuhyiurF0tvBEZyjiXbal2CvWSnP9JPG8GF9N"
+
+accessToken<-"1234484240798146560-PsbhlCAdhbBIxkU0JSrUmjXfPdPLdM"
+accessSecret<-"ZtniwBsdYVexowqNR9kepDhbdaUC6S4NizU3hAtYW04kr"
+
+# Retrieval of timelines
+
+# insert the consumer key and consumer secret from twitter
+create_token(
+  consumer_key = "n8QMJkP824hHLYioXmKjomnzo",
+  consumer_secret = "9O1iEqVMKRLbgmuhyiurF0tvBEZyjiXbal2CvWSnP9JPG8GF9N"
+)
+
+Trump_timeline<-get_timeline("realDonaldTrump",n=700)
+Bernie_timeline<-get_timeline("BernieSanders",n=700)
+Biden_timeline<-get_timeline("JoeBiden",n=700)
+
+
+# save to .RData file (files can be found in the attchments)
+save(Trump_timeline, file = "Trump_timeline.RData")
+save(Bernie_timeline, file = "Bernie_timeline.RData")
+save(Biden_timeline, file = "Biden_timeline.RData")
+
+
+
+## 2. Calculate average number of Favourites and Retweets on each candidates' posts
+To answer one of the reserach question in the analysis - the average number of retweets and Favourites per post on the candidates timeline was calculated. The pipeline is described below by using Donald Trump as an example, the same pipeline was used for each candidate's timeline data.
+
+```{r}
+# Firstly, import the Timeline.RData dataset into RStudio
+load("Trump_timeline.RData" )
+load( "Biden_timeline.RData" )
+load( "Bernie_timeline.RData" )
+
+```
+
+There are three types of tweets.
+
+Conditional Filters:
+ - Original Post:             is_quote==FALSE & is_retweet==FALSE
+ - Retweet without comment:   is_quote==FALSE & is_retweet==TRUE
+ - Retweet with comment:      is_quote==TRUE & is_retweet==FALSE
+
+The below code calcuate the number of each type of tweet.
+```{r, eval=FALSE}
+# the average number of favorites on the different types of tweets received
+print("the average number of favorites that Trump received:")
+print(paste("Original Post:",mean(subset(Trump_timeline, is_quote==FALSE & is_retweet==FALSE)$favorite_count)))
+print(paste("retweet without comment:",mean(subset(Trump_timeline, is_quote==FALSE & is_retweet==TRUE)$favorite_count)))
+print(paste("retweet with comment:",mean(subset(Trump_timeline, is_quote==TRUE & is_retweet==FALSE)$favorite_count)))
+print(paste("Total average:",mean(subset(Trump_timeline, is_retweet==FALSE)$favorite_count)))
+
+# the average number of favorites on the different types of tweets received
+print("the average number of favorites that Biden received:")
+print(paste("Original Post:",mean(subset(Biden_timeline, is_quote==FALSE & is_retweet==FALSE)$favorite_count)))
+print(paste("retweet without comment:",mean(subset(Biden_timeline, is_quote==FALSE & is_retweet==TRUE)$favorite_count)))
+print(paste("retweet with comment:",mean(subset(Biden_timeline, is_quote==TRUE & is_retweet==FALSE)$favorite_count)))
+print(paste("Total average:",mean(subset(Biden_timeline, is_retweet==FALSE)$favorite_count)))
+
+# the average number of favorites on the different types of tweets received
+print("the average number of favorites that Bernie received:")
+print(paste("Original Post:",mean(subset(Bernie_timeline, is_quote==FALSE & is_retweet==FALSE)$favorite_count)))
+print(paste("retweet without comment:",mean(subset(Bernie_timeline, is_quote==FALSE & is_retweet==TRUE)$favorite_count)))
+print(paste("retweet with comment:",mean(subset(Bernie_timeline, is_quote==TRUE & is_retweet==FALSE)$favorite_count)))
+print(paste("Total average:",mean(subset(Bernie_timeline, is_retweet==FALSE)$favorite_count)))
+
+```
+
+calculate the average number of retweets on the different types of tweets received.
+```{r,eval=FALSE}
+# the average number of retweets on the different types of tweets received
+print("the average number of retweets that Bernie received:")
+print(paste("Original Post:",mean(subset(Biden_timeline, is_quote==FALSE & is_retweet==FALSE)$retweet_count)))
+print(paste("retweet without comment:",mean(subset(Bernie_timeline, is_quote==FALSE & is_retweet==TRUE)$retweet_count)))
+print(paste("retweet with comment:",mean(subset(Bernie_timeline, is_quote==TRUE & is_retweet==FALSE)$retweet_count)))
+print(paste("Total average:",mean(subset(Bernie_timeline, is_retweet==FALSE)$retweet_count)))
+```
